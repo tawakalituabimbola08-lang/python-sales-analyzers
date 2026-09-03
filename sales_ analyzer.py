@@ -1,14 +1,28 @@
-sales = [12000, 8500, 15000, 7000, 22000]
+import pandas as pd
 
-total = sum(sales)
-average = total / len(sales)
-highest = max(sales)
-lowest = min(sales)
-number_of_sales = len(sales)
+# Load sales data
+data = pd.read_csv("sample_sales.csv")
+
+# Calculate revenue for each product
+data["revenue"] = data["quantity"] * data["price"]
+
+# Business statistics
+total_revenue = data["revenue"].sum()
+total_units = data["quantity"].sum()
+
+best_selling_product = data.loc[
+    data["quantity"].idxmax(), "product"
+]
+
+highest_revenue_product = data.loc[
+    data["revenue"].idxmax(), "product"
+]
 
 print("===== SALES REPORT =====")
-print("Total sales:", total)
-print("Average sale:", average)
-print("Highest sale:", highest)
-print("Lowest sale:", lowest)
-print("Number of sales:", number_of_sales)
+print("Total revenue:", total_revenue)
+print("Total units sold:", total_units)
+print("Best-selling product:", best_selling_product)
+print("Highest revenue product:", highest_revenue_product)
+
+print("\n===== PRODUCT DETAILS =====")
+print(data)
